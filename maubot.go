@@ -19,29 +19,31 @@ package maubot
 
 // Create creates an instance of Maubot
 func Create() *Maubot {
-	return &Maubot{Interfaces: []Bot{}, Messages: make(chan Message)}
+	return &Maubot{Interfaces: make(map[string]Bot), Messages: make(chan Message)}
 }
 
-// Maubot ...
+// Maubot is a wrapper for using multiple messaging platforms.
 type Maubot struct {
-	Interfaces []Bot
+	Interfaces map[string]Bot
 	Messages   chan Message
 }
 
 // Add adds an interface to the bot system.
-func (mb *Maubot) Add(interfc Bot) {
-	mb.Interfaces = append(mb.Interfaces, interfc)
-	interfc.AddListener(mb.Messages)
+func (mb *Maubot) Add(bot Bot) {
+	mb.Interfaces[bot.UID()] = bot
+	bot.AddListener(mb.Messages)
 }
 
-// Bot ...
+// Bot is a handler for a single messaging platform.
 type Bot interface {
-	// Underlying returns the underlying API communication system.
+	// Underlying returns the underlying platform bindings.
 	Underlying() interface{}
 	// SendMessage sends a message to a room.
 	SendMessage(to, message string)
 	// AddListener adds a channel the implementation will send messages to.
 	AddListener(chan Message)
+	// UID returns the unique ID for this instance.
+	UID() string
 
 	// Connect connects to the messaging server.
 	Connect() error
@@ -51,9 +53,9 @@ type Bot interface {
 	Disconnect() error
 }
 
-// Message ...
+// Message is a message (duh)
 type Message interface {
-	// Underlying returns the underlying API communication system.
+	// Underlying returns the underlying platform bindings.
 	Underlying() interface{}
 	// Text returns the text in the message.
 	Text() string
@@ -67,4 +69,6 @@ type Message interface {
 	SenderID() string
 	// Sender returns the preferred display name for the sender.
 	Sender() string
+	// Source returns the Bot object the message came from.
+	Source() Bot
 }

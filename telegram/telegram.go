@@ -25,7 +25,7 @@ import (
 
 // New creates an instance of the maubot implementation for Telegram.
 func New(token string) (maubot.Bot, error) {
-	bot := &TGBot{internal: nil, token: token, listeners: []chan maubot.Message{}}
+	bot := &TGBot{internal: nil, token: token, uid: maubot.RandomizeUID(), listeners: []chan maubot.Message{}}
 	return bot, nil
 }
 
@@ -33,6 +33,7 @@ func New(token string) (maubot.Bot, error) {
 type TGBot struct {
 	internal  *telebot.Bot
 	listeners []chan maubot.Message
+	uid       string
 	token     string
 	connected bool
 	stop      bool
@@ -61,6 +62,11 @@ func (bot *TGBot) Connect() error {
 		bot.connected = false
 	}()
 	return nil
+}
+
+// UID returns the unique ID for this instance.
+func (bot *TGBot) UID() string {
+	return bot.uid
 }
 
 // Connected returns whether or not the message listener is active.

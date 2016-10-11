@@ -19,6 +19,7 @@ package telegram
 
 import (
 	"github.com/tucnak/telebot"
+	"maunium.net/go/maubot"
 	"strconv"
 )
 
@@ -31,6 +32,11 @@ type TGMessage struct {
 // Underlying returns the underlying Telebot message object
 func (msg *TGMessage) Underlying() interface{} {
 	return msg.internal
+}
+
+// Source returns the TGBot parent of this message.
+func (msg *TGMessage) Source() maubot.Bot {
+	return msg.bot
 }
 
 // Reply sends a message to the room the message came from.
