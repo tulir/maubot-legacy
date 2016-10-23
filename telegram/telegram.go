@@ -29,6 +29,7 @@ func (bot *TGBot) Connect() error {
 	if err != nil {
 		return err
 	}
+	bot.internal = tg
 
 	go func() {
 		messages := make(chan telebot.Message)
