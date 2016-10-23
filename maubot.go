@@ -20,6 +20,7 @@ func (mb *Maubot) Add(bot Bot) {
 // Bot is a handler for a single messaging platform.
 type Bot interface {
 	// Underlying returns the underlying platform bindings.
+	// If the handler is implemented within the platform bindings, this can be null.
 	Underlying() interface{}
 	// SendMessage sends a message to a room.
 	SendMessage(to, message string)
@@ -39,6 +40,7 @@ type Bot interface {
 // Message is a message (duh)
 type Message interface {
 	// Underlying returns the underlying platform bindings.
+	// If the handler is implemented within the platform bindings, this can be null.
 	Underlying() interface{}
 	// Text returns the text in the message.
 	Text() string
