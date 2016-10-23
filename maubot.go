@@ -46,7 +46,11 @@ type Message interface {
 	Text() string
 	// Reply sends a message to the room this message originated from.
 	Reply(message string)
-	// RoomID returns a static room identifier that shouldn't change for the room the message was sent to.
+	// ReplyWithRef sends a message to the room this message originated from with
+	// a reference to the original sender.
+	ReplyWithRef(message string)
+	// RoomID returns a static room identifier that shouldn't change for the room
+	// the message was sent to.
 	RoomID() string
 	// Room returns the preferred display name for the room the message was sent to.
 	Room() string
