@@ -5,6 +5,7 @@ import (
 	"github.com/tucnak/telebot"
 	"maunium.net/go/maubot"
 	"strconv"
+	"strings"
 )
 
 // TGMessage is an implementation of the Maubot message for Telegram messages
@@ -61,7 +62,7 @@ func (msg *TGMessage) SenderID() string {
 
 // Sender returns the preferred displayname of the sender
 func (msg *TGMessage) Sender() string {
-	fullName := msg.internal.Sender.FirstName + " " + msg.internal.Sender.LastName
+	fullName := strings.TrimSpace(msg.internal.Sender.FirstName + " " + msg.internal.Sender.LastName)
 	if len(fullName) > 0 {
 		return fullName
 	}
