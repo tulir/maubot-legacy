@@ -10,9 +10,7 @@ Install with `go get maunium.net/go/maubot`
 #### Currently supported
 * [IRC](https://tools.ietf.org/html/rfc1459) with [libmauirc](https://maunium.net/go/libmauirc)
 * [Telegram](https://telegram.org/) with [telebot](https://github.com/tucnak/telebot)
+* [Slack](https://slack.com) with [slack](https://github.com/nlopes/slack)
 
 #### Support coming soon
 * [Matrix](https://matrix.org/) with [mautrix](https://maunium.net/go/mautrix)
-
-#### Support coming [soon™](http://wowwiki.wikia.com/wiki/Soon)
-* [Slack](https://slack.com)
