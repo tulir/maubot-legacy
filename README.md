@@ -29,6 +29,8 @@ bot.Add(tgBot)
 tgBot.Connect()
 ```
 
+There's a very simple highlight-reply bot at [tulir/jesaribot](https://github.com/tulir/jesaribot)
+
 ## Supported platforms
 #### Currently supported
 * [IRC](https://tools.ietf.org/html/rfc1459) with [libmauirc](https://maunium.net/go/libmauirc)
