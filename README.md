@@ -6,6 +6,29 @@ Please note that Maubot is at an early stage with only basic support for a few p
 
 Install with `go get maunium.net/go/maubot`
 
+## Usage
+First create a `Maubot` object.
+```go
+var bot = maubot.Create()
+```
+
+Then create your bots. Most platform bindings want authentication info in `Create()`.
+For example, this is how you would connect to Telegram:
+```go
+import "maunium.net/go/maubot/telegram"
+...
+// Initialize the platform binding object.
+var tgBot = telegram.Create("botToken")
+// Add the initialized platform binding object to the Maubot wrapper object.
+bot.Add(tgBot)
+// Actually connect to the chat platform.
+//
+// This doesn't necessarily have to be after bot.Add(), but there's a chance
+// that you'll miss some messages if you connect before adding the object to the
+// Maubot wrapper.
+tgBot.Connect()
+```
+
 ## Supported platforms
 #### Currently supported
 * [IRC](https://tools.ietf.org/html/rfc1459) with [libmauirc](https://maunium.net/go/libmauirc)
