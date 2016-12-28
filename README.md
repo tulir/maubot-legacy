@@ -29,7 +29,16 @@ bot.Add(tgBot)
 tgBot.Connect()
 ```
 
-## Examples
+Finally listen to incoming messages and handle them.
+```go
+import "fmt"
+...
+for message := range bot.Messages() {
+  fmt.Println("Received \"%s\" from %s", message.Text(), message.Sender())
+}
+```
+
+## Actual examples
 * [maubottest](https://github.com/tulir/maubot/tree/master/cmd/maubottest)
 * [jesaribot](https://github.com/tulir/jesaribot)
 
