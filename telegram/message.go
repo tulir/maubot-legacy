@@ -34,8 +34,11 @@ func (msg *Message) Reply(message string) {
 // ReplyWithRef sends a message to the room the message came from
 // with a reference to the original message or the sender.
 func (msg *Message) ReplyWithRef(message string) {
-	// TODO use Telegram reply functionality
-	msg.bot.internal.SendMessage(msg.internal.Chat, fmt.Sprintf("@%d %s", msg.internal.Sender.ID, message), nil)
+	ref := strconv.Itoa(msg.internal.Sender.ID)
+	if len(msg.internal.Sender.Username) > 0 {
+		ref = msg.internal.Sender.Username
+	}
+	msg.bot.internal.SendMessage(msg.internal.Chat, fmt.Sprintf("@%s %s", ref, message), nil)
 }
 
 // Text returns the text in the message
