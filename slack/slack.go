@@ -7,7 +7,7 @@ import (
 )
 
 func New(token string) (maubot.Bot, error) {
-	bot := &Bot{token: token, uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}}
+	bot := &Bot{token: token, uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}, stop: make(chan bool, 1)}
 	return bot, nil
 }
 
@@ -16,6 +16,7 @@ type Bot struct {
 	listeners []chan maubot.Message
 	uid       string
 	token     string
+	stop      chan bool
 }
 
 func (bot *Bot) Connect() error {
@@ -31,6 +32,10 @@ func (bot *Bot) Connect() error {
 				case *slack.MessageEvent:
 					bot.SendToListeners(&Message{bot: bot, internal: ev.Msg})
 				case *slack.InvalidAuthEvent:
+					return
+				}
+			case stop := <-bot.stop:
+				if stop {
 					return
 				}
 			}
@@ -51,6 +56,7 @@ func (bot *Bot) Connected() bool {
 
 // Disconnect stops listening for messages. It may or may not actually disconnect.
 func (bot *Bot) Disconnect() error {
+	bot.stop <- true
 	err := bot.internal.Disconnect()
 	return err
 }
