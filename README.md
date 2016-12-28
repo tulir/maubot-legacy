@@ -29,7 +29,9 @@ bot.Add(tgBot)
 tgBot.Connect()
 ```
 
-There's a very simple highlight-reply bot at [tulir/jesaribot](https://github.com/tulir/jesaribot)
+## Examples
+* [maubottest](https://github.com/tulir/maubot/tree/master/cmd/maubottest)
+* [jesaribot](https://github.com/tulir/jesaribot)
 
 ## Supported platforms
 #### Currently supported
