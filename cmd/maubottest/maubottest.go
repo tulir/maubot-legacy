@@ -20,7 +20,9 @@ var wantHelp, _ = mauflag.MakeHelpFlag()
 
 func main() {
 	mauflag.Parse()
-	mauflag.SetHelpTitles("maubottest - A simple testing utility for maubot", "maubottest [-i] [-t secret]")
+	mauflag.SetHelpTitles(
+		"maubottest - A simple testing utility for maubot",
+		"maubottest [-i ircserver] [-u ircuser] [-n ircnick] [-r ircrealname] [-t secret] [-o]")
 	if *wantHelp {
 		mauflag.PrintHelp()
 		return
