@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"maunium.net/go/maubot"
 	"maunium.net/go/maubot/irc"
 	"maunium.net/go/maubot/stdio"
@@ -24,7 +25,7 @@ func main() {
 		mauflag.PrintHelp()
 		return
 	}
-	maubot := maubot.Create()
+	maubot := maubot.New()
 
 	if len(*tgKey) > 0 {
 		tg, err := telegram.New(*tgKey)
@@ -48,7 +49,13 @@ func main() {
 		io.Connect()
 	}
 
-	for message := range maubot.Messages {
-		message.Reply(fmt.Sprintf("Hello, %s. You said %s", message.Sender(), message.Text()))
+	for message := range maubot.Messages() {
+		if message.Text() == "!leave" {
+			message.Reply("3:")
+			maubot.Remove(message.Source().UID())
+			message.Source().Disconnect()
+			return
+		}
+		message.ReplyWithRef(fmt.Sprintf("You said %s", message.Text()))
 	}
 }

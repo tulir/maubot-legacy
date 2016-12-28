@@ -23,12 +23,12 @@ func New(nick, user, realname string, addr string) (maubot.Bot, error) {
 		port, _ = strconv.Atoi(addrParts[1])
 	}
 	irc := libmauirc.Create(nick, user, libmauirc.IPv4Address{IP: host, Port: uint16(port)})
-	bot := &IRCBot{internal: irc, nick: nick, user: user, realname: realname, uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}}
+	bot := &Bot{internal: irc, nick: nick, user: user, realname: realname, uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}}
 	return bot, nil
 }
 
-// IRCBot is an implementation of maubot for IRC.
-type IRCBot struct {
+// Bot is an implementation of maubot.Bot for IRC.
+type Bot struct {
 	internal  libmauirc.Connection
 	listeners []chan maubot.Message
 	uid       string
@@ -37,8 +37,8 @@ type IRCBot struct {
 	realname  string
 }
 
-// Connect connects to the Telegram servers.
-func (bot *IRCBot) Connect() error {
+// Connect connects to the IRC server.
+func (bot *Bot) Connect() error {
 	err := bot.internal.Connect()
 	if err != nil {
 		return err
@@ -50,17 +50,17 @@ func (bot *IRCBot) Connect() error {
 }
 
 // UID returns the unique ID for this instance.
-func (bot *IRCBot) UID() string {
+func (bot *Bot) UID() string {
 	return bot.uid
 }
 
 // Connected returns whether or not the message listener is active.
-func (bot *IRCBot) Connected() bool {
+func (bot *Bot) Connected() bool {
 	return bot.internal.Connected()
 }
 
 // Disconnect stops listening for messages. It may or may not actually disconnect.
-func (bot *IRCBot) Disconnect() error {
+func (bot *Bot) Disconnect() error {
 	bot.internal.Quit()
 	go func() {
 		if bot.Connected() {
@@ -71,23 +71,23 @@ func (bot *IRCBot) Disconnect() error {
 }
 
 // Underlying returns the telebot bot object.
-func (bot *IRCBot) Underlying() interface{} {
+func (bot *Bot) Underlying() interface{} {
 	return bot.internal
 }
 
 // SendMessage sends a message to the given channel or user.
-func (bot *IRCBot) SendMessage(to, message string) {
-	bot.internal.Privmsg(to, message)
+func (bot *Bot) SendMessage(msg maubot.OutgoingMessage) {
+	bot.internal.Privmsg(msg.RoomID, msg.Text)
 }
 
 // SendToListeners ...
-func (bot *IRCBot) SendToListeners(message maubot.Message) {
+func (bot *Bot) SendToListeners(message maubot.Message) {
 	for _, listener := range bot.listeners {
 		listener <- message
 	}
 }
 
 // AddListener adds a message listener
-func (bot *IRCBot) AddListener(listener chan maubot.Message) {
+func (bot *Bot) AddListener(listener chan maubot.Message) {
 	bot.listeners = append(bot.listeners, listener)
 }

@@ -3,18 +3,16 @@ package irc
 
 import (
 	msg "github.com/sorcix/irc"
-	//"maunium.net/go/libmauirc"
-	//"maunium.net/go/maubot"
 )
 
-func (bot *IRCBot) handlePrivmsg(evt *msg.Message) {
+func (bot *Bot) handlePrivmsg(evt *msg.Message) {
 	channel := evt.Params[0]
 	if evt.Name == "maubottest" {
 		return
 	} else if bot.nick == channel {
 		channel = evt.Name
 	}
-	bot.SendToListeners(&IRCMessage{
+	bot.SendToListeners(&Message{
 		bot:      bot,
 		internal: evt,
 		sender:   evt.Name,

@@ -6,57 +6,57 @@ import (
 	"maunium.net/go/maubot"
 )
 
-// IRCMessage is an implementation of the Maubot message for IRC messages
-type IRCMessage struct {
+// Message is an implementation of maubot.Message for IRC messages
+type Message struct {
 	internal *msg.Message
 	channel  string
 	sender   string
 	message  string
-	bot      *IRCBot
+	bot      *Bot
 }
 
 // Underlying returns the underlying IRC message object
-func (msg *IRCMessage) Underlying() interface{} {
+func (msg *Message) Underlying() interface{} {
 	return msg.internal
 }
 
-// Source returns the IRCBot parent of this message.
-func (msg *IRCMessage) Source() maubot.Bot {
+// Source returns the IRC Bot parent of this message.
+func (msg *Message) Source() maubot.Bot {
 	return msg.bot
 }
 
 // Reply sends a message to the channel the message came from.
-func (msg *IRCMessage) Reply(message string) {
+func (msg *Message) Reply(message string) {
 	msg.bot.internal.Privmsg(msg.channel, message)
 }
 
 // ReplyWithRef sends a message to the channel the message came from
 // with a highlight for the sender of the original message.
-func (msg *IRCMessage) ReplyWithRef(message string) {
+func (msg *Message) ReplyWithRef(message string) {
 	msg.bot.internal.Privmsg(msg.channel, msg.sender+": "+message)
 }
 
 // Text returns the text in the message
-func (msg *IRCMessage) Text() string {
+func (msg *Message) Text() string {
 	return msg.message
 }
 
 // Room returns the name of the channel.
-func (msg *IRCMessage) Room() string {
+func (msg *Message) Room() string {
 	return msg.channel
 }
 
 // RoomID returns the name of the channel.
-func (msg *IRCMessage) RoomID() string {
+func (msg *Message) RoomID() string {
 	return msg.channel
 }
 
 // SenderID returns the nick of the sender.
-func (msg *IRCMessage) SenderID() string {
+func (msg *Message) SenderID() string {
 	return msg.sender
 }
 
 // Sender returns the nick of the sender.
-func (msg *IRCMessage) Sender() string {
+func (msg *Message) Sender() string {
 	return msg.sender
 }

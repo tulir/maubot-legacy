@@ -7,18 +7,18 @@ import (
 )
 
 func New(token string) (maubot.Bot, error) {
-	bot := &SlackBot{token: token, uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}}
+	bot := &Bot{token: token, uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}}
 	return bot, nil
 }
 
-type SlackBot struct {
+type Bot struct {
 	internal  *slack.RTM
 	listeners []chan maubot.Message
 	uid       string
 	token     string
 }
 
-func (bot *SlackBot) Connect() error {
+func (bot *Bot) Connect() error {
 	client := slack.New(bot.token)
 	bot.internal = client.NewRTM()
 	go bot.internal.ManageConnection()
@@ -29,7 +29,7 @@ func (bot *SlackBot) Connect() error {
 			case msg := <-bot.internal.IncomingEvents:
 				switch ev := msg.Data.(type) {
 				case *slack.MessageEvent:
-					bot.SendToListeners(&SlackMessage{bot: bot, internal: ev.Msg})
+					bot.SendToListeners(&Message{bot: bot, internal: ev.Msg})
 				case *slack.InvalidAuthEvent:
 					return
 				}
@@ -40,40 +40,40 @@ func (bot *SlackBot) Connect() error {
 }
 
 // UID returns the unique ID for this instance.
-func (bot *SlackBot) UID() string {
+func (bot *Bot) UID() string {
 	return bot.uid
 }
 
 // Connected returns whether or not the message listener is active.
-func (bot *SlackBot) Connected() bool {
+func (bot *Bot) Connected() bool {
 	return true
 }
 
 // Disconnect stops listening for messages. It may or may not actually disconnect.
-func (bot *SlackBot) Disconnect() error {
+func (bot *Bot) Disconnect() error {
 	err := bot.internal.Disconnect()
 	return err
 }
 
 // Underlying returns the telebot bot object.
-func (bot *SlackBot) Underlying() interface{} {
+func (bot *Bot) Underlying() interface{} {
 	return bot.internal
 }
 
 // SendMessage sends a message to the given channel or user.
-func (bot *SlackBot) SendMessage(to, message string) {
-	msg := bot.internal.NewOutgoingMessage(message, to)
-	bot.internal.SendMessage(msg)
+func (bot *Bot) SendMessage(message maubot.OutgoingMessage) {
+	bot.internal.SendMessage(
+		bot.internal.NewOutgoingMessage(message.Text, message.RoomID))
 }
 
 // SendToListeners ...
-func (bot *SlackBot) SendToListeners(message maubot.Message) {
+func (bot *Bot) SendToListeners(message maubot.Message) {
 	for _, listener := range bot.listeners {
 		listener <- message
 	}
 }
 
 // AddListener adds a message listener
-func (bot *SlackBot) AddListener(listener chan maubot.Message) {
+func (bot *Bot) AddListener(listener chan maubot.Message) {
 	bot.listeners = append(bot.listeners, listener)
 }
