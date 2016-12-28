@@ -9,7 +9,7 @@ Install with `go get maunium.net/go/maubot`
 ## Usage
 First create a `Maubot` object.
 ```go
-var bot = maubot.Create()
+var bot = maubot.New()
 ```
 
 Then create your bots. Most platform bindings want authentication info in `Create()`.
@@ -18,7 +18,7 @@ For example, this is how you would connect to Telegram:
 import "maunium.net/go/maubot/telegram"
 ...
 // Initialize the platform binding object.
-var tgBot = telegram.Create("botToken")
+var tgBot = telegram.New("botToken")
 // Add the initialized platform binding object to the Maubot wrapper object.
 bot.Add(tgBot)
 // Actually connect to the chat platform.
