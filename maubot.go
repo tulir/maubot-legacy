@@ -28,5 +28,10 @@ func (mb *maubotImpl) Messages() chan Message {
 }
 
 func (mb *maubotImpl) SendMessage(msg OutgoingMessage) {
+	bot, ok := mb.interfaces[msg.PlatformID]
+	if !ok {
+		return
+	}
 
+	bot.SendMessage(msg)
 }
