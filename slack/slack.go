@@ -2,11 +2,12 @@ package slack
 
 import (
 	"github.com/nlopes/slack"
+	"github.com/satori/go.uuid"
 	"maunium.net/go/maubot"
 )
 
 func New(token string) (maubot.Bot, error) {
-	bot := &SlackBot{token: token, uid: maubot.RandomizeUID(), listeners: []chan maubot.Message{}}
+	bot := &SlackBot{token: token, uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}}
 	return bot, nil
 }
 
@@ -18,7 +19,6 @@ type SlackBot struct {
 }
 
 func (bot *SlackBot) Connect() error {
-
 	client := slack.New(bot.token)
 	bot.internal = client.NewRTM()
 	go bot.internal.ManageConnection()

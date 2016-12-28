@@ -2,11 +2,13 @@
 package irc
 
 import (
+	"strconv"
+	"strings"
+
+	"github.com/satori/go.uuid"
 	msg "github.com/sorcix/irc"
 	"maunium.net/go/libmauirc"
 	"maunium.net/go/maubot"
-	"strconv"
-	"strings"
 )
 
 // New creates an instance of the maubot implementation for Telegram.
@@ -21,7 +23,7 @@ func New(nick, user, realname string, addr string) (maubot.Bot, error) {
 		port, _ = strconv.Atoi(addrParts[1])
 	}
 	irc := libmauirc.Create(nick, user, libmauirc.IPv4Address{IP: host, Port: uint16(port)})
-	bot := &IRCBot{internal: irc, nick: nick, user: user, realname: realname, uid: maubot.RandomizeUID(), listeners: []chan maubot.Message{}}
+	bot := &IRCBot{internal: irc, nick: nick, user: user, realname: realname, uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}}
 	return bot, nil
 }
 

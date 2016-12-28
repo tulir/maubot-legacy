@@ -4,15 +4,17 @@ package stdio
 import (
 	"bufio"
 	"fmt"
-	"maunium.net/go/maubot"
 	"os"
 	"os/user"
 	"strings"
+
+	"github.com/satori/go.uuid"
+	"maunium.net/go/maubot"
 )
 
 // New creates an instance of the maubot implementation for standard input and output.
 func New() maubot.Bot {
-	return &IOBot{uid: maubot.RandomizeUID(), listeners: []chan maubot.Message{}}
+	return &IOBot{uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}}
 }
 
 // IOBot is an implementation of maubot for standard input and output.

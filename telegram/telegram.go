@@ -2,14 +2,16 @@
 package telegram
 
 import (
+	"time"
+
+	"github.com/satori/go.uuid"
 	"github.com/tucnak/telebot"
 	"maunium.net/go/maubot"
-	"time"
 )
 
 // New creates an instance of the maubot implementation for Telegram.
 func New(token string) (maubot.Bot, error) {
-	bot := &TGBot{internal: nil, token: token, uid: maubot.RandomizeUID(), listeners: []chan maubot.Message{}}
+	bot := &TGBot{internal: nil, token: token, uid: uuid.NewV4().String(), listeners: []chan maubot.Message{}}
 	return bot, nil
 }
 
