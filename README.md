@@ -40,4 +40,4 @@ tgBot.Connect()
 * [Slack](https://slack.com) with [slack](https://github.com/nlopes/slack)
 
 #### Support coming soon
-* [Matrix](https://matrix.org/) with [mautrix](https://maunium.net/go/mautrix)
+* [Matrix](https://matrix.org/)
