@@ -10,6 +10,13 @@ import (
 	"maunium.net/go/maubot"
 )
 
+var markdown *telebot.SendOptions
+
+func init() {
+	markdown = new(telebot.SendOptions)
+	markdown.ParseMode = telebot.ModeMarkdown
+}
+
 // Message is an implementation of maubot.Message for Telebot messages
 type Message struct {
 	internal telebot.Message
@@ -26,9 +33,15 @@ func (msg *Message) Source() maubot.Bot {
 	return msg.bot
 }
 
+// FormatMessage formats a Markdown message into Telegram format
+func FormatMessage(message string) string {
+	message = strings.Replace(message, "**", "*", -1)
+	return message
+}
+
 // Reply sends a message to the room the message came from.
 func (msg *Message) Reply(message string) {
-	msg.bot.internal.SendMessage(msg.internal.Chat, message, nil)
+	msg.bot.internal.SendMessage(msg.internal.Chat, FormatMessage(message), markdown)
 }
 
 // ReplyWithRef sends a message to the room the message came from
@@ -38,7 +51,7 @@ func (msg *Message) ReplyWithRef(message string) {
 	if len(msg.internal.Sender.Username) > 0 {
 		ref = msg.internal.Sender.Username
 	}
-	msg.bot.internal.SendMessage(msg.internal.Chat, fmt.Sprintf("@%s %s", ref, message), nil)
+	msg.bot.internal.SendMessage(msg.internal.Chat, fmt.Sprintf("@%s %s", ref, FormatMessage(message)), markdown)
 }
 
 // Text returns the text in the message
