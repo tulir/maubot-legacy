@@ -43,10 +43,7 @@ for message := range bot.Messages() {
 * [jesaribot](https://github.com/tulir/jesaribot)
 
 ## Supported platforms
-#### Currently supported
 * [IRC](https://tools.ietf.org/html/rfc1459) with [libmauirc](https://maunium.net/go/libmauirc)
 * [Telegram](https://telegram.org/) with [telebot](https://github.com/tucnak/telebot)
 * [Slack](https://slack.com) with [slack](https://github.com/nlopes/slack)
-
-#### Support coming soon
-* [Matrix](https://matrix.org/)
+* [Matrix](https://matrix.org) with [mautrix](https://maunium.net/go/mautrix)
