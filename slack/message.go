@@ -2,7 +2,7 @@ package slack
 
 import (
 	"github.com/nlopes/slack"
-	"maunium.net/go/maubot"
+	"maunium.net/go/maubot-legacy"
 )
 
 type Message struct {

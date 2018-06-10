@@ -3,7 +3,7 @@ package slack
 import (
 	"github.com/nlopes/slack"
 	"github.com/satori/go.uuid"
-	"maunium.net/go/maubot"
+	"maunium.net/go/maubot-legacy"
 )
 
 func New(token string) (maubot.Bot, error) {

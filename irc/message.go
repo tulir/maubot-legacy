@@ -3,7 +3,7 @@ package irc
 
 import (
 	msg "github.com/sorcix/irc"
-	"maunium.net/go/maubot"
+	"maunium.net/go/maubot-legacy"
 )
 
 // Message is an implementation of maubot.Message for IRC messages

@@ -1,10 +1,21 @@
-# Maubot
+# No longer maintained
+[Matrix](https://matrix.org) has bridges, so I'm focusing on making bridge-friendly
+Matrix bots rather than trying to make bots that speak many protocols. I'm also bad
+at naming, so I renamed this project to maubot-legacy in order to use [maubot](https://github.com/tulir/maubot)
+for my Matrix bot system.
+
+Matrix bridges that can replace this library:
+* [mautrix-telegram](https://github.com/tulir/mautrix-telegram)
+* [matrix-appservice-irc](https://github.com/matrix-org/matrix-appservice-irc)
+* [matrix-appservice-slack](https://github.com/matrix-org/matrix-appservice-slack)
+
+# Maubot (Legacy)
 A chatbot platform abstraction library. If you write a bot that uses Maubot interfaces,
 you can easily allow it to connect to any chat platform with Maubot bindings.
 
 Please note that Maubot is at an early stage with only basic support for a few platforms.
 
-Install with `go get maunium.net/go/maubot`
+Install with `go get maunium.net/go/maubot-legacy`
 
 ## Usage
 First create a `Maubot` object.
@@ -15,7 +26,7 @@ var bot = maubot.New()
 Then create your bots. Most platform bindings want authentication info in `Create()`.
 For example, this is how you would connect to Telegram:
 ```go
-import "maunium.net/go/maubot/telegram"
+import "maunium.net/go/maubot-legacy/telegram"
 ...
 // Initialize the platform binding object.
 var tgBot = telegram.New("botToken")
@@ -39,7 +50,7 @@ for message := range bot.Messages() {
 ```
 
 ## Actual examples
-* [maubottest](https://github.com/tulir/maubot/tree/master/cmd/maubottest)
+* [maubottest](https://github.com/tulir/maubot-legacy/tree/master/cmd/maubottest)
 * [jesaribot](https://github.com/tulir/jesaribot)
 
 ## Supported platforms

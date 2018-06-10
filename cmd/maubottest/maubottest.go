@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 
-	"maunium.net/go/maubot"
-	"maunium.net/go/maubot/irc"
-	"maunium.net/go/maubot/stdio"
-	"maunium.net/go/maubot/telegram"
+	"maunium.net/go/maubot-legacy"
+	"maunium.net/go/maubot-legacy/irc"
+	"maunium.net/go/maubot-legacy/stdio"
+	"maunium.net/go/maubot-legacy/telegram"
 	"maunium.net/go/mauflag"
 )
 

@@ -3,7 +3,7 @@ package matrix
 import (
 	"fmt"
 
-	"maunium.net/go/maubot"
+	"maunium.net/go/maubot-legacy"
 	"maunium.net/go/mautrix"
 )
 

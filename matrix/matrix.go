@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/satori/go.uuid"
-	"maunium.net/go/maubot"
+	"maunium.net/go/maubot-legacy"
 	"maunium.net/go/mautrix"
 )
 

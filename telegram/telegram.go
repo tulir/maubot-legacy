@@ -6,7 +6,7 @@ import (
 
 	"github.com/satori/go.uuid"
 	"github.com/tucnak/telebot"
-	"maunium.net/go/maubot"
+	"maunium.net/go/maubot-legacy"
 )
 
 // SimpleRecipient is an implementation of the telebot Recipient interface.

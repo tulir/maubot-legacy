@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/tucnak/telebot"
-	"maunium.net/go/maubot"
+	"maunium.net/go/maubot-legacy"
 )
 
 var markdown *telebot.SendOptions

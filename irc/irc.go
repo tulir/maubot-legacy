@@ -8,7 +8,7 @@ import (
 	"github.com/satori/go.uuid"
 	msg "github.com/sorcix/irc"
 	"maunium.net/go/libmauirc"
-	"maunium.net/go/maubot"
+	"maunium.net/go/maubot-legacy"
 )
 
 // New creates an instance of the maubot implementation for Telegram.

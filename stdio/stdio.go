@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/satori/go.uuid"
-	"maunium.net/go/maubot"
+	"maunium.net/go/maubot-legacy"
 )
 
 // New creates an instance of the maubot.Bot implementation for standard IO.
